@@ -1,0 +1,31 @@
+nav [class="navbar navbar-expand-lg navbar-dark bg-dark"]
+    div [id="navbar_container" class="container-fluid d-flex align-items-center"]
+        div [class="me-auto"] 
+            a [class="navbar-brand" href=root_path] Digimedia
+
+        div [class="collapse navbar-collapse justify-content-center"]
+            ul [class="navbar-nav"]
+                li [class="nav-item active"]
+                    a [class="nav-link" href=root_path] Feed
+                - if user_signed_in?
+                    - if current_user&.isAdmin? 
+                        li [class="nav-item active"]
+                            a [class="nav-link" href=posts_path] Manage Posts
+                        li [class="nav-item active"]
+                            a [class="nav-link" href=audit_path] User Audits
+                    - else
+                        li [class="nav-item active"]
+                            a [class="nav-link" href=posts_path] My Posts
+            ul[class="navbar-nav ms-auto"]
+                - if !user_signed_in?
+                    li [class="nav-item active"]
+                        a [class="nav-link" href=new_user_session_path] Login
+                - else
+                    li[class="nav-item inactive"]
+                        a[class="nav-link" style="color: #FFFFFF"] Hello, #{current_user.email}
+                    li [class="nav-item active"]
+                        a [class="nav-link" href=destroy_user_session_path] Logout
+
+                    li [class="nav-item active"]
+                        = button_to "Logout", destroy_user_session_path, method: :delete
+
