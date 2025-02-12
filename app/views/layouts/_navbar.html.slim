@@ -8,11 +8,11 @@ nav [class="navbar navbar-expand-lg navbar-dark bg-dark"]
                 li [class="nav-item active"]
                     a [class="nav-link" href=root_path] Feed
                 - if user_signed_in?
+                    li [class="nav-item active"]
+                        a [class="nav-link" href=admin_admin_path] Admin Portal
                     - if current_user&.isAdmin? 
                         li [class="nav-item active"]
-                            a [class="nav-link" href=posts_path] Manage Posts
-                        li [class="nav-item active"]
-                            a [class="nav-link" href=audit_path] User Audits
+                            a [class="nav-link" href=admin_audits_path] User Audits
                     - else
                         li [class="nav-item active"]
                             a [class="nav-link" href=posts_path] My Posts
@@ -24,7 +24,7 @@ nav [class="navbar navbar-expand-lg navbar-dark bg-dark"]
                     li[class="nav-item inactive"]
                         a[class="nav-link" style="color: #FFFFFF"] Hello, #{current_user.email}
                     li [class="nav-item active"]
-                        a [class="nav-link" href=destroy_user_session_path] Logout
+                        = link_to "Logout", destroy_user_session_path, method: :delete, class: "nav-link", data: { turbo: "false" }
 
                     li [class="nav-item active"]
                         = button_to "Logout", destroy_user_session_path, method: :delete

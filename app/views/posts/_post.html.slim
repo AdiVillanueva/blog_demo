@@ -1,16 +1,15 @@
-div id="#{dom_id post}"
-  p
-    strong Title:
-    =< post.title
-  p
-    strong Content:
-    =< post.content
-  p
-    strong Active:
-    =< post.active
-  p
-    strong Featured:
-    =< post.featured
-  p
-    strong Publication date:
-    =< post.publication_date
+= turbo_frame_tag "post_#{post.id}" do
+  div[class="card"]
+    div[class="card-body"]
+      h2[class="card-title"] = post.title
+      p[class="card-text"] = post.content
+      p[class="card-text"]
+        | Author: 
+        = post.user.email
+      p[class="card-text"]
+        strong Publication Date:
+        = post.publication_date
+      - if user_signed_in? && post.user_id == current_user.id
+        = link_to "Quick Edit", edit_post_path(post), method: :get, class: "btn btn-primary"
+
+

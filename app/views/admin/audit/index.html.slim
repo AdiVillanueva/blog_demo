@@ -1,6 +1,8 @@
 h1 Audit Page 
 
 h2 User Audits
+== pagy_info(@pagy)
+== pagy_bootstrap_nav(@pagy)
 - @user_audits.each do |audit|
   div
     h3
@@ -12,6 +14,8 @@ h2 User Audits
 hr
 
 h2 Post Audits
+== pagy_info(@pagy)
+== pagy_bootstrap_nav(@pagy)
 - @post_audits.each do |audit|
   div
     h3
@@ -23,3 +27,4 @@ h2 Post Audits
             = key + ": " + value[0].to_s + " -> " + value[1].to_s
           - else
             = key + ": " + (value ? "true" : "false")
+

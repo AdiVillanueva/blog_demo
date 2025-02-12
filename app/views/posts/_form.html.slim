@@ -8,11 +8,18 @@
 
   div
     = form.label :title, style: "display: block"
-    = form.text_field :title
+    -if current_user&.isAdmin?
+      = form.text_field :title, disabled: true
+    -else
+      = form.text_field :title
+
 
   div
     = form.label :content, style: "display: block"
-    = form.textarea :content
+    -if current_user&.isAdmin?
+      = form.textarea :content, disabled: true
+    -else
+      = form.text_field :content
 
   div
     -if current_user&.isAdmin?
