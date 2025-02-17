@@ -16,6 +16,7 @@ gem "turbo-rails"
 gem "stimulus-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
+gem "hotwire-rails", "~> 0.1.3"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
@@ -38,6 +39,8 @@ gem "kamal", require: false
 gem "thruster", require: false
 gem "slim-rails"
 
+gem "devise", "~> 4.9"
+gem "audited"
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
@@ -62,6 +65,3 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
-
-gem "devise", "~> 4.9"
-gem "audited"

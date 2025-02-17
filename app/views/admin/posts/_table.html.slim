@@ -1,0 +1,25 @@
+.table-responsive
+  table.table
+    thead
+      tr
+        th Title
+        th Content
+        th Publication Date
+        th Last Updated At
+        th Action
+    tbody
+      - if records.present?
+        - records.each do |r|
+          tr      
+            td = r.title
+            td = r.content
+            td.text-center = custom_format_date(r.publication_date, '%b %d, %Y | %I:%M %p')
+            td.text-center = custom_format_date(r.updated_at, '%b %d, %Y | %I:%M %p')
+            td
+      - else
+        tr
+          td.bg--light colspan="100%"
+            .text-center.full-content.d-flex.flex-wrap.justify-content-center.flex-column
+              / = image_tag("no-record.svg", class: "img-fluid mx-auto mb-4 grayscale", alt: "No Records", size: "220", loading: "lazy")
+              .h5.em.mb-2 No Records Found
+              p No data found. Try to check your spelling or use different parameters.

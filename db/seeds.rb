@@ -14,3 +14,17 @@ user.update!(
     password_confirmation: "adminpass",
     isAdmin: true
 )
+
+Post.destroy_all
+ActiveRecord::Base.connection.execute("ALTER SEQUENCE posts_id_seq RESTART WITH 1;")
+15.times do
+  last_post = Post.last # Reload every time
+  prefix = last_post.present? ? last_post.id + 1 : 1
+  Post.create!(
+    title: "Post #{prefix}",
+    content: "Contents of Post #{prefix}",
+    active: true,
+    featured: false,
+    user: User.first
+  )
+end
