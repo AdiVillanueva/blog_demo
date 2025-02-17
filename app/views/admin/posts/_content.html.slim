@@ -1,0 +1,27 @@
+.card
+  .card__content
+    =form_with(url: admin_posts_path, method: "GET",
+    data: { turbo_frame: "data-table", controller: "table", action: "input->table#submitForm" }) do |f|
+      =f.hidden_field :order_by, data: { "order-by": "order-by" }
+      .row.gx-4.align-items-center.mb-4
+        .col-lg
+          .row.gx-4
+            .col-6.col-lg-4
+              .field-group.mb-0
+                .field-container
+                  =f.text_field :title, class: "search-input field", autocomplete: "off", placeholder: 'Title', value: params[:title]
+                  .svg-icon
+            .col-6.col-lg-4
+              .field-group.mb-0
+                .field-container
+                  =f.select(:active, options_for_select([['Active', true], ['Inactive', false]], params[:active]), {include_blank: 'All Statuses'}, id:"active", class:"field field--select js-filter-select")
+            .col-lg-4
+              .field-group.mb-0
+                .field-container
+                  select.js-filter-select.field.field--select name="count_per_page"
+                    option selected=('selected' if params[:count_per_page] == '10') value="10" Show 10
+                    option selected=('selected' if params[:count_per_page] == '25') value="25" Show 25
+                    option selected=('selected' if params[:count_per_page] == '50') value="50" Show 50
+
+      =turbo_frame_tag "data-table" do
+        =render partial: "table", locals: { records: @posts }

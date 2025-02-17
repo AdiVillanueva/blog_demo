@@ -17,5 +17,5 @@ devise_for :users,
   }
 
 namespace :admin do
-  resources :post
+  resources :posts
 end
