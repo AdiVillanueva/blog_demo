@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 html 
   head
-    title DigiMedia
+    title DigiSpace
     = csrf_meta_tags 
     meta charset="UTF-8"/
     meta name="viewport" content="width=device-width, initial-scale=1.0"/
@@ -12,11 +12,12 @@ html
     = javascript_importmap_tags
     
 body
-  = render "layouts/navbar"
-  main
-    p [class="notice"] == notice
-    p [class="alert"] == alert
-    == yield
+  == render "layouts/navbar"
 
+  main
+    p.notice = flash[:notice]
+    p.alert = flash[:alert]
+    == yield
+      
 
 

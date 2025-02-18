@@ -1,0 +1,18 @@
+= turbo_frame_tag "post_#{post.id}" do
+  div.card
+    div.card-body
+      h2.card-title = post.title
+      p.card-text = post.content
+      p.card-text
+        | Author: 
+        = post.customer.email
+      p.card-text
+        strong Publication Date:
+        = post.publication_date
+      - if customer_signed_in? && post.customer_id == current_customer.id
+        div.d-flex.gap-2
+          = link_to "Quick Edit", edit_site_post_path(post), method: :get, class: "btn btn-primary"
+          = button_to "Destroy", site_post_path(post), method: :delete, class: "btn btn-danger"
+
+
+

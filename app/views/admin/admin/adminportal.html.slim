@@ -1,0 +1,21 @@
+h1 Admin Portal
+
+== pagy_info(@pagy)
+== pagy_bootstrap_nav(@pagy)
+
+- if @posts.present?
+  div[class="table-responsive"]
+    table[class="table"]
+      thead[class="thead-dark"]
+        tr
+          th [scope="col"] ID
+          th [scope="col"] Author
+          th [scope="col"] Title
+          th [scope="col"] Content
+          th [scope="col"] Status
+
+      tbody
+        - @posts.each do |post|
+          = render "admin/posts/post_rows", post: post
+- else
+  p No posts available

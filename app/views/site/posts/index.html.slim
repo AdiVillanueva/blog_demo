@@ -1,0 +1,17 @@
+p style="color: green" = notice
+
+h1 Posts
+== pagy_info(@pagy)
+== pagy_bootstrap_nav(@pagy)
+
+= turbo_frame_tag "new_post" do
+  = link_to "New post", new_site_post_path, data:{turbo_frame: "new_post"}
+
+
+#posts
+  - @posts.each do |post|
+    == render "post", post: post
+
+
+
+

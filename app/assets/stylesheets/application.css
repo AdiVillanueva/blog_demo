@@ -10,3 +10,7 @@
  */
 
 @import "custom";
+
+footer {
+    margin-top: auto
+}

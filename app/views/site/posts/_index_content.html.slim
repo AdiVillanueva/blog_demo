@@ -1,0 +1,13 @@
+= turbo_frame_tag "post_#{post.id}" do
+    div[class="card"]
+    div[class="card-body"]
+        h2[class="card-title"] = post.title
+        p[class="card-text"] = post.content
+        p[class="card-text"]
+        | Author: 
+        = post.customer.email
+        p[class="card-text"]
+        strong Publication Date:
+        = post.publication_date
+        p
+        = link_to "Show this post", site_post_path(post)

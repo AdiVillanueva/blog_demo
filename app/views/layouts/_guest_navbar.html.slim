@@ -1,0 +1,12 @@
+nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
+    div#navbar_container.container-fluid.d-flex.align-items-center
+        div.collapse.navbar-collapse.justify-content-center
+            ul.navbar-nav
+                li.navbar-brand 
+                    = link_to "DigiSpace", root_path, class: "navbar-brand mx-auto"
+                li.nav-item.active
+                    = link_to "Feed", root_path, class: "nav-link"
+
+                - if !customer_signed_in?
+                    li.nav-item.active
+                        = link_to "Login", new_customer_session_path, class: "nav-link"

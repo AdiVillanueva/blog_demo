@@ -1,0 +1,8 @@
+h1 New post
+= turbo_frame_tag "new_post" do
+  == render "form_new_post", post: @post
+
+  br
+
+  div
+    = link_to "Back to posts", site_posts_path

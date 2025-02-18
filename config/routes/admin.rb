@@ -1,9 +1,25 @@
 Rails.application.routes.draw do
-  resources :posts
-  devise_for :users
+  devise_for :users,
+    path: "admin",
+    controllers: {
+    sessions: "admin/sessions",
+    registrations: "admin/registrations",
+    passwords: "admin/passwords"
+  },
+  path_names: {
+    sign_in: "/login",
+    password: "/forgot",
+    confirmation: "/confirm",
+    unblock: "/unblock",
+    registration: "/register",
+    sign_out: "/logout",
+    password_expired: "/password-expired"
+  }
 
-  namespace :admin do
-  get "audits", to: "audit#index"
-  get "admin", to: "pages#adminportal"
+
+  namespace :admin, path: "/admin" do
+    resources :posts, only: [ :index, :update ]
+    get "audits", to: "audit#index"
+    get "home", to: "admin#adminportal"
   end
 end

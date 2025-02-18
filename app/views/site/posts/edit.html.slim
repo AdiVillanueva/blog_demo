@@ -1,0 +1,10 @@
+h1 Editing post
+turbo-frame [id="post_#{@post.id}"]
+  == render "form_edit_post", post: @post
+
+  br
+
+  div
+    => link_to "Show this post", site_post_path(@post)
+    '|
+    =< link_to "Back to posts", site_posts_path
