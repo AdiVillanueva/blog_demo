@@ -20,6 +20,5 @@ Rails.application.routes.draw do
   namespace :admin, path: "/admin" do
     resources :posts, only: [ :index, :update ]
     get "audits", to: "audit#index"
-    get "home", to: "admin#adminportal"
   end
 end

@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(resource)
     if resource.is_a?(User)
-      admin_home_path
+      admin_posts_path
     elsif resource.is_a?(Customer)
       root_path
     else

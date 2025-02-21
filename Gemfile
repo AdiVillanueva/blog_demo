@@ -65,5 +65,5 @@ end
 
 gem "devise", "~> 4.9"
 gem "audited"
-gem "hotwire-rails"
+gem "hotwire-rails", "~> 0.1.3"
 gem "pagy", "~> 9.3" # omit patch digit

@@ -6,9 +6,5 @@ module Admin
 
     def audit
     end
-
-    def adminportal
-        @pagy, @posts = pagy(Post.order(publication_date: :desc), limit: 5)
-    end
   end
 end
