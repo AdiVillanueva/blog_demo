@@ -38,6 +38,10 @@ gem "kamal", require: false
 gem "thruster", require: false
 gem "slim-rails"
 
+gem "devise", "~> 4.9"
+gem "audited"
+gem "hotwire-rails", "~> 0.1.3"
+gem "pagy", "~> 9.3" # omit patch digit
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
@@ -62,8 +66,3 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
-
-gem "devise", "~> 4.9"
-gem "audited"
-gem "hotwire-rails", "~> 0.1.3"
-gem "pagy", "~> 9.3" # omit patch digit

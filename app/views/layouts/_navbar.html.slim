@@ -1,7 +1,7 @@
 nav 
     - if customer_signed_in?
-        == render "layouts/customer_navbar"
+        = render "layouts/customer_navbar"
     - elsif user_signed_in?
-        == render "layouts/admin_navbar"
+        = render "layouts/admin_navbar"
     - else
-        == render "layouts/guest_navbar"
+        = render "layouts/guest_navbar"
