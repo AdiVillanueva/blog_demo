@@ -1,18 +1,26 @@
-p style="color: green" = notice
-turbo-frame [id="post_#{@post.id}"]
-  h1 = @post.title
-  p = @post.content
-  p
-    | Author: 
-    = @post.customer.email
-  p
-    strong Publication Date:
-    = @post.publication_date
+h1 = @post.title
+p = @post.content
+p
+  | Author: 
+  = @post.customer.email
+p
+  strong Publication Date:
+  = @post.publication_date
 
-  - if @post.customer_id == current_customer.id
+= turbo_frame_tag "post_#{@post.id}_comments" do
+  = render "site/comments/comments_list", post: @post
+
+- if customer_signed_in?
+  = form_with model: [@post, Comment.new], url: site_post_comments_path(@post), method: :post, data: { turbo_frame: "post_#{@post.id}_comments" } do |f|
+    div
+      = f.label :content, "Add a Comment:"
+      = f.text_area :content, class: "form-control"
+    div.mt-2
+      = f.submit "Post Comment", class: "btn btn-primary"
+      
+    = link_to "Back to Home Page", root_path, data: { turbo_frame: "_top" }
+  -if @post.customer_id == current_customer.id
     div
       = link_to "Edit this post", edit_site_post_path(@post)
-      = link_to "Back to posts", root_path
-      = button_to "Destroy this post", site_post_path(@post), method: :delete
-  - else
-    p You are not allowed to modify this post
+      = button_to "Destroy this post", site_post_path(@post), method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "btn btn-danger btn-sm"
+

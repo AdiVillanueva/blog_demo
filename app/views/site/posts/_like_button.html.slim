@@ -1,0 +1,11 @@
+= turbo_frame_tag "post_#{post.id}_like_button" do
+  div.d-flex.gap-2
+    - if post.liked?(current_customer)
+      = link_to site_post_unlike_path(post), data: { turbo_method: :delete }, class: "text-danger"
+        i.bi.bi-heart-fill style="font-size: 1.5rem;"
+    - else
+      = link_to site_post_like_path(post), data: { turbo_method: :post }, class: "text-dark"
+        i.bi.bi-heart style="font-size: 1.5rem;"
+    span.align-self-center
+      = post.likes_count
+      |  Likes

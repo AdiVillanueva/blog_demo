@@ -1,23 +1,23 @@
-div [class="container"]
-  h1 [id="featured-posts_title"] Featured Posts
+.container-fluid.w-50
+  h1#featured_posts_title.text-center.mb-4 Featured Posts
   - if @featured_posts.present?
-    div [class="row"]  
+    div.row.justify-content-center
       - @featured_posts.each do |post|
-        div [class="col-md-4 col-sm-6 mb-3"]  
+        div.col-md-12.col-sm-12.col-lg-12.mb-3
           = render "site/posts/post", post: post
   - else
     p No posts available.
 
   hr
-div[class="container"]
-  h1[id="all-posts_title"] All Posts (Desc. Order by Publication Date)
+.container-fluid.w-50
+  h1#all_posts_title All Posts (Desc. Order by Publication Date)
   == pagy_info(@pagy)
   == pagy_bootstrap_nav(@pagy)
 
   - if @posts.present?
-    div[class="row"]
+    div.row.justify-content-center
       - @posts.each do |post|
-        div[class="col-md-4 col-sm-6 mb-3"]
+        div.col-md-12.col-sm-12.col-lg-12.mb-3
           = render "site/posts/post", post: post
   - else
     p No posts available.

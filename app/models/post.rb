@@ -1,12 +1,13 @@
 class Post < ApplicationRecord
   include Filterable
   belongs_to :customer
+  has_many :likes, dependent: :destroy
+  has_many :comments, dependent: :destroy
 
   validates :title, presence: true, length: { minimum: 5, maximum: 255, message: "cannot exceed 255 characters" }, uniqueness: { case_sensitive: true }
   validates :content, presence: true, length: { minimum: 5, maximum: 1500, message: "cannot exceed 1500 characters" }
 
   audited associated_with: :customer
-
 
   scope :for_datatables, -> {
       select(%(
@@ -29,4 +30,17 @@ class Post < ApplicationRecord
     scope :filter_by_active, ->(status) {
       where("active = ?", status)
     }
+
+  def like_toggle(customer)
+    if liked?(customer)
+      likes.find_by(customer: customer).destroy
+    else
+      likes.create(customer: customer)
+    end
+    update(likes_count: likes.count)
+  end
+
+  def liked?(customer)
+    likes.exists?(customer: customer)
+  end
 end

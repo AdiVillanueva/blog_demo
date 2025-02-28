@@ -1,0 +1,7 @@
+div.card id="comment_#{comment.id}"
+  div.card-body
+    p
+      strong = comment.customer.email
+    p = comment.content
+    - if customer_signed_in? && comment.customer == current_customer
+      = button_to "Delete", site_post_comment_path(comment.post, comment), method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "btn btn-danger btn-sm"

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_12_111435) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_25_091134) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -34,6 +34,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_12_111435) do
     t.index ["created_at"], name: "index_audits_on_created_at"
     t.index ["request_uuid"], name: "index_audits_on_request_uuid"
     t.index ["user_id", "user_type"], name: "user_index"
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.text "content"
+    t.bigint "post_id", null: false
+    t.bigint "customer_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["customer_id"], name: "index_comments_on_customer_id"
+    t.index ["post_id"], name: "index_comments_on_post_id"
   end
 
   create_table "customers", force: :cascade do |t|
@@ -65,6 +75,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_12_111435) do
     t.index ["reset_password_token"], name: "index_installs_on_reset_password_token", unique: true
   end
 
+  create_table "likes", force: :cascade do |t|
+    t.bigint "customer_id", null: false
+    t.bigint "post_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["customer_id"], name: "index_likes_on_customer_id"
+    t.index ["post_id"], name: "index_likes_on_post_id"
+  end
+
   create_table "posts", force: :cascade do |t|
     t.string "title"
     t.text "content"
@@ -74,6 +93,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_12_111435) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "customer_id", null: false
+    t.integer "likes_count", default: 0
     t.index ["customer_id"], name: "index_posts_on_customer_id"
   end
 
@@ -95,5 +115,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_12_111435) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "comments", "customers"
+  add_foreign_key "comments", "posts"
+  add_foreign_key "likes", "customers"
+  add_foreign_key "likes", "posts"
   add_foreign_key "posts", "customers"
 end

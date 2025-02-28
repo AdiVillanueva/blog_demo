@@ -1,18 +1,43 @@
 = turbo_frame_tag "post_#{post.id}" do
-  div.card
-    div.card-body
+  .card.h-100
+    .card-body.d-flex.flex-column
+
+      .dropdown.position-absolute.top-0.end-0.p-2
+        button.btn.btn-secondary.dropdown-toggle id="actionDropDown" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aira-expanded="false"
+          i.bi.bi-three-dots
+
+        div.dropdown-menu aria-labelledby="actionDropDown"
+          - if customer_signed_in?
+            - if post.customer_id == current_customer.id
+              = link_to "Quick Edit", edit_site_post_path(post), method: :get, class: "dropdown-item"
+              = button_to "Destroy", site_post_path(post), method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "dropdown-item text-danger"
+            - else
+              span.dropdown-item.text-muted No available options
+          - else
+            span.dropdown-item.text-muted No available options
+          
+      
+
       h2.card-title = post.title
-      p.card-text = post.content
+
+      - truncate_content = truncate(post.content, length: 100, separator: ' ', omission: '...')
+      p.card-text id="post-content-#{post.id}" data-post-target="content" data-post-id=post.id data-expanded="false" data-truncate=truncate_content data-full=post.content
+        = truncate_content
+
+      - if post.content.length > 100
+        a href="#" data-action="click->post#toggleReadMore" data-post-target="readMore" data-post-id=post.id id="read-more-#{post.id}" class="text-primary"
+          | Read More  
+          
       p.card-text
         | Author: 
         = post.customer.email
       p.card-text
         strong Publication Date:
         = post.publication_date
-      - if customer_signed_in? && post.customer_id == current_customer.id
-        div.d-flex.gap-2
-          = link_to "Quick Edit", edit_site_post_path(post), method: :get, class: "btn btn-primary"
-          = button_to "Destroy", site_post_path(post), method: :delete, class: "btn btn-danger"
 
-
-
+      - if customer_signed_in?
+        div.d-flex.flex-wrap.justify-content-start.gap-2.mt-auto
+          = render "site/posts/like_button", post: post
+          = link_to site_post_path(post), data: { turbo_frame: "_top" }, class:"text-decoration-none"
+            i.bi.bi-chat style="font-size: 1.5rem;"
+            span.align-self-center.ms-1 Comment

@@ -9,7 +9,8 @@ nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
                 - if customer_signed_in?
                     li.nav-item.active
                         = link_to "My Posts", site_posts_path, class: "nav-link"
-                    
+                    li.nav-item.active
+                        =  link_to "Admin Portal", admin_posts_path, class: "nav-link"
                 - if !customer_signed_in?
                     li.nav-item.active
                         = link_to "Login", new_customer_session_path, class: "nav-link"

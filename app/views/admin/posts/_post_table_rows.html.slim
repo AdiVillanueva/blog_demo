@@ -1,8 +1,9 @@
 tr
   td = post.id
   td = post.customer.email
-  td = post.title
-  td = post.content
+  td = - truncate_title = truncate(post.title, length: 50, separator: ' ', omission: '...')
+  td = - truncate_content = truncate(post.content, length: 100, separator: ' ', omission: '...')
+  td = post.publication_date
   td
     = form_with(model: post, url:admin_post_path(post), data: { turbo_frame: "post_#{post.id}" }) do |form|
       - if post.errors.any?
@@ -11,10 +12,11 @@ tr
           ul
             - post.errors.each do |error|
               li = error.full_message
+      - if user_signed_in?
+        div.d-flex.flex-wrap.justify-content-start.gap-2.mt-auto
+          = form.label :active
+          = form.check_box :active, onchange: "this.form.requestSubmit()"
 
-      = form.label :active
-      = form.check_box :active, onchange: "this.form.requestSubmit()"
-
-      = form.label :featured
-      = form.check_box :featured, onchange: "this.form.requestSubmit()"
+          = form.label :featured
+          = form.check_box :featured, onchange: "this.form.requestSubmit()"
   

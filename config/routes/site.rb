@@ -17,7 +17,11 @@ Rails.application.routes.draw do
   }
 
   namespace :site, path: "/" do
-    resources :posts
+    resources :posts do
+      post "like", to: "likes#create", as: "like"
+      delete "like", to: "likes#destroy", as: "unlike"
+      resources :comments, only: [ :create, :destroy ]
+    end
     get "home", to: "site#homepage"
   end
 end

@@ -60,7 +60,9 @@ module Site
 
     def destroy
       if @post.customer_id != current_customer.id
-        redirect_to posts_path, alert: "You are not allowed to delete other user's posts"
+        respond_to do |format|
+          format.html { redirect_to posts_path, notice: "You are not allowed to delete other user's posts" }
+        end
       else
         @post.destroy!
 
@@ -77,7 +79,7 @@ module Site
     private
 
     def set_post
-      @post = current_customer.posts.find(params[:id])
+      @post = Post.find(params[:id])
     end
 
     def post_params

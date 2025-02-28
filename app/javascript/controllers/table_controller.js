@@ -3,14 +3,14 @@ import debounce from "debounce";
 
 export default class extends Controller {
     connect() {
-        console.log("Table Controller connected!", this.element);
+        console.log('Table Controller connected!', this.element);
     }
     initialize() {
-        console.log('hello');
+        console.log('Table Controller Initialized');
         this.submitFilter = debounce(this.submitFilter.bind(this), 300);
     }
     submitFilter() {
-        console.log("submit filter called");
+        console.log('submit filter called');
         this.element.requestSubmit();
     }
 
@@ -40,9 +40,6 @@ export default class extends Controller {
         console.log(orderByField);
         orderByField.value = clickedBtn.value;
     }
-
-    submitForm() {
-        console.log('submit method called');
-        this.element.requestSubmit();
-    }
 }
+
+

@@ -7,7 +7,12 @@ module Admin
     def index
       @has_record = Post.for_datatables.present?
       order_by_vals = params[:order_by].present? ? params[:order_by].split("_") : []
-      @pagy, @posts = pagy(Post.filter(params.slice(:title, :active), order_by_vals).for_datatables, limit: 10)
+      count_per_page = params[:count_per_page].presence || 5
+
+      @pagy, @posts = pagy(
+        Post.filter(params.slice(:title, :active), order_by_vals).for_datatables,
+        limit: count_per_page.to_i
+      )
     end
 
     def show
@@ -36,12 +41,10 @@ module Admin
 
 
     private
-      # Use callbacks to share common setup or constraints between actions.
       def set_post
         @post = Post.find(params[:id])
       end
 
-      # Only allow a list of trusted parameters through.
       def post_params
         params.require(:post).permit(:active, :featured)
       end
