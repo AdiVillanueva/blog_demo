@@ -18,7 +18,7 @@
           
       
 
-      h2.card-title = post.title
+      h2.card-title.mt-4 = post.title
 
       - truncate_content = truncate(post.content, length: 100, separator: ' ', omission: '...')
       p.card-text id="post-content-#{post.id}" data-post-target="content" data-post-id=post.id data-expanded="false" data-truncate=truncate_content data-full=post.content

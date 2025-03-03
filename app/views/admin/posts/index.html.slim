@@ -19,13 +19,17 @@ h1 Admin Portal
                   .field-group.mb-0
                     .field-container
                       =f.select(:active, options_for_select([['Active', true], ['Inactive', false]], params[:active]), {include_blank: 'All Statuses'}, id:"active", class:"field field--select js-filter-select")
+                .col-6.col-lg-4
+                      .field-group.mb-0
+                        .field-container
+                          =f.select(:featured, options_for_select([['Featured', true], ['Not Featured', false]], params[:featured]), {include_blank: 'All Posts'}, id:"featured", class:"field field--select js-filter-select")
                 .col-lg-4
                   .field-group.mb-0
                     .field-container
                       select.js-filter-select.field.field--select name="count_per_page"
-                        option selected=('selected' if params[:count_per_page] == '5') value="5" Show 5
                         option selected=('selected' if params[:count_per_page] == '10') value="10" Show 10
-                        option selected=('selected' if params[:count_per_page] == '20') value="20" Show 20     
+                        option selected=('selected' if params[:count_per_page] == '25') value="25" Show 25
+                        option selected=('selected' if params[:count_per_page] == '50') value="50" Show 50     
 
           = turbo_frame_tag "data-table" do
             == pagy_info(@pagy)
@@ -34,19 +38,18 @@ h1 Admin Portal
               table.table
                 .thead-dark
                   tr
-                    th scope="col" 
-                      = link_to 'ID', '#', data: { action: 'click->table#sortByColumn', column: 'id' }
-                    th scope="col"
-                      = link_to 'Author', '#', data: { action: 'click->table#sortByColumn', column: 'author' }
-                    th scope="col" 
-                      = link_to 'Title', '#', data: { action: 'click->table#sortByColumn', column: 'title' }
-                    th scope="col" 
-                      = link_to 'Content', '#'
-                    th scope="col" 
-                      = link_to 'Publication Date', '#', data: { action: 'click->table#sortByColumn', column: 'publication_date' }
+                    - sort_columns = {"ID" => "id",
+                                      "Author" => "customer_id",
+                                      "Title" => "title",
+                                      "Content" => "content",
+                                      "Publication Date" => "publication_date"}
+                    - sort_columns.each do |label, column|
+                      - sort_direction = (params[:order_by] == "#{column}_asc") ? "desc": "asc"
+                      th
+                        = link_to label, admin_posts_path(order_by: "#{column}_#{sort_direction}"), data: { turbo_frame: "data-table" }
+
                     - if user_signed_in?
-                      th scope="col"
-                        = link_to 'Status', '#'
+                      th Status
 
                 tbody.table-group-divider
                   - @posts.each do |post|

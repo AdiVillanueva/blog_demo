@@ -1,16 +1,16 @@
 module Admin
   class PostsController < AdminController
-    before_action :set_post, only: %i[show edit update]
+    before_action :set_post, only: %i[show edit update destroy]
     before_action :authenticate_user!, except: [ :index, :show ]
     include Pagy::Backend
 
     def index
       @has_record = Post.for_datatables.present?
       order_by_vals = params[:order_by].present? ? params[:order_by].split("_") : []
-      count_per_page = params[:count_per_page].presence || 5
+      count_per_page = params[:count_per_page].presence || 10
 
       @pagy, @posts = pagy(
-        Post.filter(params.slice(:title, :active), order_by_vals).for_datatables,
+        Post.filter(params.slice(:title, :active, :featured, :publication_date), order_by_vals).for_datatables,
         limit: count_per_page.to_i
       )
     end
@@ -36,6 +36,18 @@ module Admin
           format.html { render :edit, status: :unprocessable_entity }
           format.json { render json: @post.errors, status: :unprocessable_entity }
         end
+      end
+    end
+
+    def destroy
+      @post.destroy!
+
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.remove("post_#{@post.id}")
+        end
+        format.html { redirect_to posts_path, status: :see_other, notice: "Post was successfully destroyed." }
+        format.json { head :no_content }
       end
     end
 

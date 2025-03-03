@@ -35,8 +35,11 @@ export default class extends Controller {
 
     sortByColumn(e) {
         console.log('sort by column triggered');
+
         const clickedBtn = e.currentTarget;
         const orderByField = document.querySelector('[data-order-by]');
+        const orderByValue = clickedBtn.dataset.orderBy;
+
         console.log(orderByField);
         orderByField.value = clickedBtn.value;
     }

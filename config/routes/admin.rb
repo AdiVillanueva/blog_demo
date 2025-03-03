@@ -18,7 +18,7 @@ Rails.application.routes.draw do
 
 
   namespace :admin, path: "/admin" do
-    resources :posts, only: [ :index, :update ]
+    resources :posts, only: [ :index, :update, :destroy ]
     get "audits", to: "audit#index"
   end
 end

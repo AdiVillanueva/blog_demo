@@ -31,6 +31,18 @@ class Post < ApplicationRecord
       where("active = ?", status)
     }
 
+    scope :filter_by_featured, ->(status) {
+      where("featured = ?", status)
+    }
+
+    scope :filter_order_by, ->(order_by_vals) {
+      return unless order_by_vals.present? && order_by_vals.length == 2
+
+      column, direction = order_by_vals
+      direction = %w[asc, desc].include?(direction) ? direction: "asc"
+      order ("#{column} #{direction}")
+    }
+
   def like_toggle(customer)
     if liked?(customer)
       likes.find_by(customer: customer).destroy
