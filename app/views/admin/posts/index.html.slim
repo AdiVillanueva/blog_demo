@@ -31,28 +31,28 @@ h1 Admin Portal
                         option selected=('selected' if params[:count_per_page] == '25') value="25" Show 25
                         option selected=('selected' if params[:count_per_page] == '50') value="50" Show 50     
 
-          = turbo_frame_tag "data-table" do
-            == pagy_info(@pagy)
-            == pagy_bootstrap_nav(@pagy)
-            .table-responsive
-              table.table
-                .thead-dark
-                  tr
-                    - sort_columns = {"ID" => "id",
-                                      "Author" => "customer_id",
-                                      "Title" => "title",
-                                      "Content" => "content",
-                                      "Publication Date" => "publication_date"}
-                    - sort_columns.each do |label, column|
-                      - sort_direction = (params[:order_by] == "#{column}_asc") ? "desc": "asc"
-                      th
-                        = link_to label, admin_posts_path(order_by: "#{column}_#{sort_direction}"), data: { turbo_frame: "data-table" }
+  = turbo_frame_tag "data-table" do
+    == pagy_info(@pagy)
+    == pagy_bootstrap_nav(@pagy)
+    .table-responsive
+      table.table
+        .thead-dark
+          tr
+            - sort_columns = {"ID" => "id",
+                              "Author" => "customer_id",
+                              "Title" => "title",
+                              "Content" => "content",
+                              "Publication Date" => "publication_date"}
+            - sort_columns.each do |label, column|
+              - sort_direction = (params[:order_by] == "#{column}_asc") ? "desc": "asc"
+              th
+                = link_to label, admin_posts_path(order_by: "#{column}_#{sort_direction}"), data: { turbo_frame: "data-table" }
 
-                    - if user_signed_in?
-                      th Status
+            - if user_signed_in?
+              th Status
 
-                tbody.table-group-divider
-                  - @posts.each do |post|
-                    = render "admin/posts/post_table_rows", post: post
+        tbody.table-group-divider
+          - @posts.each do |post|
+            = render "admin/posts/post_table_rows", post: post
 - else
   p No posts available
